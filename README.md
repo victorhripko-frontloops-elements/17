@@ -1,21 +1,4 @@
-# Template for FrontLoops [Elements] challenge
+# Custom scroll
 
-Install all dependencies
-```bash
-npm i
-```
-
-For start watching all files use:
-```bash
-npm run start
-```
-
-then open in browser
-```bash
-http://localhost:1234/
-```
-
-For build all files use:
-```bash
-npm run build
-```
+Build a component to display a custom scrollbar that follows your block scroll
+and displays the scrolled ratio correctly
