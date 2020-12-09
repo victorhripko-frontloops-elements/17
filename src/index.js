@@ -3,27 +3,32 @@ import './style.scss';
 
   const wrap = document.querySelector('.wrap');
   const wrapBody = wrap.querySelector('.wrap__body');
-  // const scrollHandle = document.querySelector('.scroll__handle');
+  const scroll = wrap.querySelector('.scroll');
+  const scrollHandle = scroll.querySelector('.scroll__handle');
 
-  // const scrollSize = wrap.offsetHeight / wrap.scrollHeight * 100;
-  // scrollHandle.style.height = `${scrollSize}%`;
+  const scrollPercentageSize = wrap.offsetHeight / wrap.scrollHeight * 100;
+  scrollHandle.style.height = `${scrollPercentageSize}%`;
 
   const wrapPaddings = getPadding(wrap).top + getPadding(wrap).bottom;
-  const maxScroll = wrap.offsetHeight - wrapBody.scrollHeight - wrapPaddings;
+  const maxScrollContent = wrap.offsetHeight - wrapBody.scrollHeight - wrapPaddings;
 
-  let currentScroll = 0;
-
+  let currentContentPos = 0;
 
   window.addEventListener('wheel', evt => {
-    const nextPosition = currentScroll - evt.deltaY;
-    currentScroll = nextPosition > 0 ? 0 : nextPosition < maxScroll ? maxScroll : nextPosition;
-
-    wrapBody.style.transform = `translateY(${currentScroll}px)`;
-    // scrollHandle.style.transform = `translateY(${transformHandle}px)`;
-
-
-    console.log(currentScroll)
+    moveContent(currentContentPos - evt.deltaY);
   });
+
+  function moveContent(pos) {
+    currentContentPos = pos > 0 ? 0 : pos < maxScrollContent ? maxScrollContent : pos;
+    wrapBody.style.transform = `translate3d(0, ${currentContentPos}px, 0)`;
+
+    moveScroll(currentContentPos / maxScrollContent * 100)
+  }
+
+  function moveScroll(pos) {
+    let position = (scroll.offsetHeight - scrollHandle.offsetHeight) / 100 * pos;
+    scrollHandle.style.transform = `translate3d(0, ${position}px, 0)`;
+  }
 
 
   function getPadding(elem) {
